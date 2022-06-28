@@ -1,24 +1,4 @@
-URL: /dfasd
-Timestamp: Fri Jun 24 2022 00:54:05 GMT-0400 (Eastern Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Fri Jun 24 2022 00:54:05 GMT-0400 (Eastern Daylight Time)
-
-URL: /documentation.html
-Timestamp: Fri Jun 24 2022 00:55:25 GMT-0400 (Eastern Daylight Time)
-
-URL: /documentation
-Timestamp: Fri Jun 24 2022 00:57:53 GMT-0400 (Eastern Daylight Time)
-
-URL: /dfasdga
-Timestamp: Fri Jun 24 2022 00:58:31 GMT-0400 (Eastern Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Fri Jun 24 2022 00:58:31 GMT-0400 (Eastern Daylight Time)
-
-URL: /documentation
-Timestamp: Fri Jun 24 2022 01:08:40 GMT-0400 (Eastern Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Fri Jun 24 2022 01:08:40 GMT-0400 (Eastern Daylight Time)
-
+::ffff:127.0.0.1 - - [28/Jun/2022:04:18:19 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [28/Jun/2022:04:18:28 +0000] "GET /documentation HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [28/Jun/2022:04:18:33 +0000] "GET /movies HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [28/Jun/2022:04:18:40 +0000] "GET /ghahlsdgh HTTP/1.1" 404 148 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
