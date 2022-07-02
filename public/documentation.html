@@ -7,12 +7,251 @@
     <title>Document</title>
 </head>
 <body>
-    <p>
-        To build the server-side component of a “movies” web application. The web
+        <h1>Myflix API Introduction</h1>
+        <p>
+        Myflix API is a “movies” web application. The web
 application will provide users with access to information about different
 movies, directors, and genres. Users will be able to sign up, update their
 personal information, and create a list of their favorite movies.
-
     </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Business Logic</th>
+                <th>URL</th>
+                <th>HTTP Method</th>
+                <th>Request body data format</th>
+                <th>Response body data format</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Get a list of movies
+                </td>
+                <td>
+                    /movies
+                </td>
+                <td>
+                    GET
+                </td>
+                <td>
+                    None
+                </td>
+                <td>
+                    A JSON object holding data about all the movies
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Get data about a single movie by movie name
+                </td>
+                <td>
+                    /movies/[title]
+                </td>
+                <td>
+                    GET
+                </td>
+                <td>
+                    None
+                </td>
+                <td>
+                    A JSON object holding data about a single movie, containing an ID, title, description, genre, director and image url. Example:
+                    <pre>
+                        <code>
+                            {
+                                id:1,
+                                title:"Harry Potter and the Sorcerer\'s Stone",
+                                Description:"Harry Potter and the Philosopher's Stone (released in the United States, India and the Philippines as Harry 
+                                Potter and the Sorcerer's Stone) is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros. Pictures, 
+                                based on J. K. Rowling's 1997 novel of the same name. Produced by David Heyman and screenplay by Steve Kloves, it is the first 
+                                instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, 
+                                and Emma Watson as Hermione Granger. Its story follows Harry's first year at Hogwarts School of Witchcraft and Wizardry as he 
+                                discovers that he is a famous wizard and begins his formal wizarding education.",
+                                genre:"fantasy, Adventure, Children's film, Narrative",
+                                director:"Chris Columbus",
+                                image-url:""
+                            }
+                        </code>
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Get genre of a movie by movie name
+                </td>
+                <td>
+                    /movies/genres/[title]
+                </td>
+                <td>
+                    GET
+                </td>
+                <td>
+                    None
+                </td>
+                <td>
+                    A JSON object holding data about the genre of a specific movie. Example:
+                    <pre>
+                        <code>
+                            {
+                                genre:"fantasy, Adventure, Children's film, Narrative"
+                            }
+                        </code>
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Get data about a director by director name
+                </td>
+                <td>
+                    /movies/directors/[directorname]
+                </td>
+                <td>
+                    GET
+                </td>
+                <td>
+                    None
+                </td>
+                <td>
+                    A JSON object holding data about a director. Example:
+                    <pre>
+                        <code>
+                            {
+                                director:"Chris Columbus",
+                                birthday:"September 10, 1958",
+                                bio:"Chris Joseph Columbus[1] (born September 10, 1958) is an American filmmaker. Born in Spangler, Pennsylvania, 
+                                Columbus studied film at Tisch School of the Arts where he developed an interest in filmmaking. After writing screenplays 
+                                for several teen comedies in the mid-1980s, he made his directorial debut with a teen adventure, Adventures in Babysitting (1987). 
+                                Columbus gained recognition soon after with the highly successful Christmas comedy Home Alone (1990) and its sequel Home Alone 2: Lost in New York (1992)."
+                            }
+                        </code>
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Add a movie to the collection
+                </td>
+                <td>
+                    /movies/collections
+                </td>
+                <td>
+                    POST
+                </td>
+                <td>
+                    A JSON object holding data about the movie to add structure like:
+                    <pre>
+                        <code>
+                            {
+                                "title":"Harry Potter and the Sorcerer\'s Stone",
+                                "Description":"The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, and Emma Watson as Hermione Granger. Its story follows Harry's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his formal wizarding education.",
+                                "genre":"fantasy, Adventure, Children's film, Narrative",
+                                "director":"Chris Columbus",
+                                "image-url":""
+                            }
+                        </code>
+                    </pre>
+
+                </td>
+                <td>
+                    A JSON object holding data about the movie that was added, including an ID:
+                    <pre>
+                        <code>
+                            {
+                                id:1,
+                                title:"Harry Potter and the Sorcerer\'s Stone"
+                                Description:"Harry Potter and the Philosopher's Stone (released in the United States, India and the Philippines as Harry 
+                                Potter and the Sorcerer's Stone) is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros. Pictures, 
+                                based on J. K. Rowling's 1997 novel of the same name. Produced by David Heyman and screenplay by Steve Kloves, it is the first 
+                                instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, 
+                                and Emma Watson as Hermione Granger. Its story follows Harry's first year at Hogwarts School of Witchcraft and Wizardry as he 
+                                discovers that he is a famous wizard and begins his formal wizarding education."
+                                genre:"fantasy, Adventure, Children's film, Narrative"
+                                director:"Chris Columbus"
+                                image-url:""
+                            }
+                        </code>
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Remove a movie from the collection by ID
+                </td>
+                <td>
+                    /movies/collections/[title]
+                </td>
+                <td>
+                    DELETE
+                </td>
+                <td>
+                    None
+                </td>
+                <td>
+                    A text message indicating whether the movie was successfuly removed
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Allow new users to register;
+                </td>
+                <td>
+                    /users
+                </td>
+                <td>
+                    POST
+                </td>
+                <td>A JSON object holding data about the users to add, structured like:
+                    <pre>
+                         <code>
+                             {
+                             "username": "sunny",
+                             "password": "*****"",
+                             "email": "123456@mail.com"
+                             }
+                         </code>
+                     </pre>
+                 </td>
+                 <td>A JSON object holding data about the users added, inluding an ID:
+                    <pre>
+                        <code>
+                            {   
+                                "id":"123",
+                                "username": "sunny",
+                                "password": "*****"",
+                                "email": "123456@mail.com"
+                                }
+                        </code>
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Allow users to update their user info (username)
+                </td>
+                <td>
+                    /users/[username]
+                </td>
+                <td>
+                    PUT
+                </td>
+                <td>
+                    None
+                </td>
+                <td>
+                    A text message indicating the username was updated.
+                </td>
+            </tr>
+            <tr>
+                <td>Allow exisiting users to deregister</td>
+                <td>/users/[id]</td>
+                <td>DELETE</td>
+                <td>none</td>
+                <td>A text message indicating whether the user was successfully deregisted</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
