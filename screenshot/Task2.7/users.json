@@ -1,0 +1,4 @@
+{"_id":{"$oid":"62ca40e501b7ab6c754ebde9"},"Username":"zzyzz","Password":"1234567","Email":"daiopsd@gmail.com","Birthday":{"$date":"1986-05-07T00:00:00Z"},"FavoriteMovies":[{"$oid":"62ca2a5a01b7ab6c754ebde4"}]}
+{"_id":{"$oid":"62ca40e901b7ab6c754ebdea"},"Username":"SunnyZ","Password":"1234567","Email":"emailupdated@gmail.com","Birthday":{"$date":"1994-06-16T00:00:00Z"},"FavoriteMovies":[{"$oid":"62ca2a5a01b7ab6c754ebde4"},{"$oid":"62ca2a5201b7ab6c754ebde2"}]}
+{"_id":{"$oid":"62ca410f01b7ab6c754ebdec"},"Username":"Guifei","Password":"1234567","Email":"guifeiniangniangah@gmail.com","Birthday":{"$date":"1980-09-16T00:00:00Z"},"FavoriteMovies":[{"$oid":"62ca2a4e01b7ab6c754ebde1"}]}
+{"_id":{"$oid":"62ca411401b7ab6c754ebded"},"Username":"Niangniang","Password":"1234567","Email":"niangnianglaila@gmail.com","Birthday":{"$date":"1996-04-07T00:00:00Z"},"FavoriteMovies":[{"$oid":"62ca2a4e01b7ab6c754ebde1"}]}

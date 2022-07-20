@@ -28,7 +28,7 @@ personal information, and create a list of their favorite movies.
         <tbody>
             <tr>
                 <td>
-                    Get a list of movies
+                    Return a list of ALL movies to the user
                 </td>
                 <td>
                     /movies
@@ -45,7 +45,7 @@ personal information, and create a list of their favorite movies.
             </tr>
             <tr>
                 <td>
-                    Get data about a single movie by movie name
+                    Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
                 </td>
                 <td>
                     /movies/[title]
@@ -60,29 +60,32 @@ personal information, and create a list of their favorite movies.
                     A JSON object holding data about a single movie, containing an ID, title, description, genre, director and image url. Example:
                     <pre>
                         <code>
-                            {
-                                id:1,
-                                title:"Harry Potter and the Sorcerer\'s Stone",
-                                Description:"Harry Potter and the Philosopher's Stone (released in the United States, India and the Philippines as Harry 
-                                Potter and the Sorcerer's Stone) is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros. Pictures, 
-                                based on J. K. Rowling's 1997 novel of the same name. Produced by David Heyman and screenplay by Steve Kloves, it is the first 
-                                instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, 
-                                and Emma Watson as Hermione Granger. Its story follows Harry's first year at Hogwarts School of Witchcraft and Wizardry as he 
-                                discovers that he is a famous wizard and begins his formal wizarding education.",
-                                genre:"fantasy, Adventure, Children's film, Narrative",
-                                director:"Chris Columbus",
-                                image-url:""
-                            }
+                            { 
+                                "_id" : ObjectId("62d6efbe20613873b1d4edf3"), 
+                            "Title" : "Annabelle Comes Home", 
+                            "Description" : "Determined to keep Annabelle from wreaking more havoc, paranormal investigators Ed and Lorraine Warren lock the possessed doll in the artifacts room in their house. But when the doll awakens the room's evil spirits, it soon becomes an unholy night of terror for the couple's 10-year-old daughter, her friends and their young baby sitter.", 
+                            "Genre" : { 
+                                "Name" : "Horror", 
+                                "Description" : "Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes." 
+                            }, 
+                            "Director" : { 
+                                "Name" : "Gary Dauberman", 
+                                "Bio" : "Gary Dauberman is an American screenwriter and director. He is known for writing The Conjuring Universe horror films Annabelle, Annabelle: Creation, The Nun, and Annabelle Comes Home. He made his directorial debut with the latter film.", 
+                                "Birth" : "unknown" 
+                            }, 
+                            "ImagePath" : "Annabelle.png", 
+                            "Featured" : true 
+                        }
                         </code>
                     </pre>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Get genre of a movie by movie name
+                    Return data about a genre (description) by name/title (e.g., “Thriller”)
                 </td>
                 <td>
-                    /movies/genres/[title]
+                    /movies/genres/[name]
                 </td>
                 <td>
                     GET
@@ -94,16 +97,16 @@ personal information, and create a list of their favorite movies.
                     A JSON object holding data about the genre of a specific movie. Example:
                     <pre>
                         <code>
-                            {
+                            <!-- {
                                 genre:"fantasy, Adventure, Children's film, Narrative"
-                            }
+                            } -->
                         </code>
                     </pre>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Get data about a director by director name
+                    Return data about a director (bio, birth year, death year) by name
                 </td>
                 <td>
                     /movies/directors/[directorname]
@@ -118,59 +121,45 @@ personal information, and create a list of their favorite movies.
                     A JSON object holding data about a director. Example:
                     <pre>
                         <code>
-                            {
+                            <!-- {
                                 director:"Chris Columbus",
                                 birthday:"September 10, 1958",
                                 bio:"Chris Joseph Columbus[1] (born September 10, 1958) is an American filmmaker. Born in Spangler, Pennsylvania, 
                                 Columbus studied film at Tisch School of the Arts where he developed an interest in filmmaking. After writing screenplays 
                                 for several teen comedies in the mid-1980s, he made his directorial debut with a teen adventure, Adventures in Babysitting (1987). 
                                 Columbus gained recognition soon after with the highly successful Christmas comedy Home Alone (1990) and its sequel Home Alone 2: Lost in New York (1992)."
-                            }
+                            } -->
                         </code>
                     </pre>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Add a movie to the collection
+                    Allow users to add a movie to their list of favorites
                 </td>
                 <td>
-                    /movies/collections
+                    /users/[username]/collections/[MovieID]
                 </td>
                 <td>
                     POST
                 </td>
                 <td>
-                    A JSON object holding data about the movie to add structure like:
-                    <pre>
-                        <code>
-                            {
-                                "title":"Harry Potter and the Sorcerer\'s Stone",
-                                "Description":"The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, and Emma Watson as Hermione Granger. Its story follows Harry's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his formal wizarding education.",
-                                "genre":"fantasy, Adventure, Children's film, Narrative",
-                                "director":"Chris Columbus",
-                                "image-url":""
-                            }
-                        </code>
-                    </pre>
-
+                    None
                 </td>
                 <td>
                     A JSON object holding data about the movie that was added, including an ID:
                     <pre>
                         <code>
                             {
-                                id:1,
-                                title:"Harry Potter and the Sorcerer\'s Stone"
-                                Description:"Harry Potter and the Philosopher's Stone (released in the United States, India and the Philippines as Harry 
-                                Potter and the Sorcerer's Stone) is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros. Pictures, 
-                                based on J. K. Rowling's 1997 novel of the same name. Produced by David Heyman and screenplay by Steve Kloves, it is the first 
-                                instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, 
-                                and Emma Watson as Hermione Granger. Its story follows Harry's first year at Hogwarts School of Witchcraft and Wizardry as he 
-                                discovers that he is a famous wizard and begins his formal wizarding education."
-                                genre:"fantasy, Adventure, Children's film, Narrative"
-                                director:"Chris Columbus"
-                                image-url:""
+                                "_id": "62d860fa0d42007c3d6e6191",
+                                "Username": "Sunnytest",
+                                "Password": "Sunnytest",
+                                "Email": "Sunnytest@gmail.com",
+                                "FavoriteMovies": [
+                                    "62ca1db901b7ab6c754ebdde",
+                                    "62ca1db901b7ab6c754ebdde"
+                                ],
+                                "__v": 0
                             }
                         </code>
                     </pre>
@@ -181,7 +170,7 @@ personal information, and create a list of their favorite movies.
                     Remove a movie from the collection by ID
                 </td>
                 <td>
-                    /movies/collections/[title]
+                    /users/[username]/collections/[MovieID]
                 </td>
                 <td>
                     DELETE
@@ -206,30 +195,33 @@ personal information, and create a list of their favorite movies.
                 <td>A JSON object holding data about the users to add, structured like:
                     <pre>
                          <code>
-                             {
-                             "username": "sunny",
-                             "password": "*****"",
-                             "email": "123456@mail.com"
-                             }
+                            {
+                                "Username":"Sunnytest",
+                                "Password":"Sunnytest",
+                                "Email":"Sunnytest@gmail.com",
+                                "Birth":"1991-01-01"
+                            }
                          </code>
                      </pre>
                  </td>
                  <td>A JSON object holding data about the users added, inluding an ID:
                     <pre>
                         <code>
-                            {   
-                                "id":"123",
-                                "username": "sunny",
-                                "password": "*****"",
-                                "email": "123456@mail.com"
-                                }
+                            {
+                                "Username": "Sunnytest",
+                                "Password": "Sunnytest",
+                                "Email": "Sunnytest@gmail.com",
+                                "FavoriteMovies": [],
+                                "_id": "62d860fa0d42007c3d6e6191",
+                                "__v": 0
+                            }
                         </code>
                     </pre>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Allow users to update their user info (username)
+                    Allow users to update their user info by username
                 </td>
                 <td>
                     /users/[username]
@@ -237,16 +229,39 @@ personal information, and create a list of their favorite movies.
                 <td>
                     PUT
                 </td>
-                <td>
-                    None
+                <td>A JSON object holding data with the info need to be updated:
+                    <pre>
+                        <code>
+                    {
+                        "Username":"Sunnyzzyzz",
+                        "Password":"Sunnytest",
+                        "Email":"Sunnyzzyzz@gmail.com",
+                        "Birth":"1991-01-01"
+                    }
+                </code>
+                </pre>
                 </td>
                 <td>
-                    A text message indicating the username was updated.
+                    A JSON object holding data with updated user info:
+                    <pre>
+                        <code>
+                            {
+                                "_id": "62ca40e501b7ab6c754ebde9",
+                                "Username": "Sunnyzzyzz",
+                                "Password": "Sunnytest",
+                                "Email": "Sunnyzzyzz@gmail.com",
+                                "Birthday": "1986-05-07T00:00:00.000Z",
+                                "FavoriteMovies": [
+                                    "62ca2a5a01b7ab6c754ebde4"
+                                ]
+                            }
+                        </code>
+                    </pre>
                 </td>
             </tr>
             <tr>
                 <td>Allow exisiting users to deregister</td>
-                <td>/users/[id]</td>
+                <td>/users/[username]</td>
                 <td>DELETE</td>
                 <td>none</td>
                 <td>A text message indicating whether the user was successfully deregisted</td>
