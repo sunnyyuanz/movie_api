@@ -25,6 +25,11 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const cors = require('cors');
+const { check, validationResult } = require('express-validator');
+
+app.use(cors());
+
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
@@ -36,7 +41,7 @@ app.get('/', (req, res) => {
 //get all movies
 app.get(
   '/movies',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     movies
       .find()
@@ -53,7 +58,7 @@ app.get(
 //get movies/movie by its movie title
 app.get(
   '/movies/:title',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     movies
       .find({ Title: req.params.title })
@@ -70,7 +75,7 @@ app.get(
 //get genres by genre name
 app.get(
   '/movies/genres/:name',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     movies
       .findOne({ 'Genre.Name': req.params.name })
@@ -87,7 +92,7 @@ app.get(
 //get directors by director name
 app.get(
   '/movies/directors/:directorname',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     movies
       .findOne({ 'Director.Name': req.params.directorname })
@@ -110,7 +115,7 @@ app.get(
 // }
 app.put(
   '/users/:Username',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     users.findOneAndUpdate(
       { Username: req.params.Username },
@@ -138,7 +143,7 @@ app.put(
 //Get all users
 app.get(
   '/users',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     users
       .find()
@@ -155,7 +160,7 @@ app.get(
 //Get a user by username
 app.get(
   '/users/:Username',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     users
       .findOne({ Username: req.params.Username })
@@ -179,39 +184,65 @@ app.get(
 //   Birthday:Date
 
 // }
-app.post('/users', (req, res) => {
-  users
-    .findOne({ Username: req.body.Username })
-    .then((user) => {
-      if (user) {
-        return res.status(400).send(req.body.Username + 'already exists');
-      } else {
-        users
-          .create({
-            Username: req.body.Username,
-            Password: req.body.Password,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday,
-          })
-          .then((user) => {
-            res.status(201).json(user);
-          })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send('Error:' + error);
-          });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error:' + error);
-    });
-});
+app.post(
+  '/users',
+  //Validatin logic here for request
+  //you can either use a chain of methods like .not().isEmpty()
+  //which means "opposite of isEmpty" in plain english "is not empty"
+  //or use .isLength({min:5}) which means
+  //mininum value of 5 characters are only allowed
+  [
+    check('Username', 'Username is required').isLength({ min: 5 }),
+    check(
+      'Username',
+      'Username contains non alphanumeric characters - not allowed.'
+    ).isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail(),
+  ],
+  (req, res) => {
+    //check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashPassword = users.hashPassword(req.body.Password);
+    users
+      .findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
+      .then((user) => {
+        if (user) {
+          //if the user is found, send a response that it already exists
+          return res.status(400).send(req.body.Username + 'already exists');
+        } else {
+          users
+            .create({
+              Username: req.body.Username,
+              Password: hashPassword,
+              Email: req.body.Email,
+              Birthday: req.body.Birthday,
+            })
+            .then((user) => {
+              res.status(201).json(user);
+            })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).send('Error:' + error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error:' + error);
+      });
+  }
+);
 
 //Delete/Deregister a user by username
 app.delete(
   '/users/:Username',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     users
       .findOneAndRemove({ Username: req.params.Username })
@@ -232,7 +263,7 @@ app.delete(
 //Add a movie to a user's list of favorites
 app.post(
   '/users/:username/collections/:MovieID',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     users.findOneAndUpdate(
       { Username: req.params.username },
@@ -255,7 +286,7 @@ app.post(
 //Remove a movie from user's list of favorites
 app.delete(
   '/users/:username/collections/:MovieID',
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     users.findOneAndUpdate(
       { Username: req.params.username },
@@ -286,6 +317,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on Port' + port);
 });

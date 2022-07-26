@@ -25,6 +25,11 @@ passport.use(new LocalStrategy({
             console.log('incorrect username');
 //if an error occurs, or if the username can't be found within the database, an error message is passed to the callback 
             return callback(null,false, {message:'Incorrect username or password'});
+        };
+
+        if(!user.validatePassword(password)){
+            console.log('incorrect password');
+            return callback(null, false, {message: 'Incorrect password.'});
         }
 
         console.log('finished');
