@@ -120,14 +120,36 @@ app.get(
 // }
 app.put(
   '/users/:Username',
+  //Validatin logic here for request
+  //you can either use a chain of methods like .not().isEmpty()
+  //which means "opposite of isEmpty" in plain english "is not empty"
+  //or use .isLength({min:5}) which means
+  //mininum value of 5 characters are only allowed
+  [
+    check('Username', 'Username is required').isLength({ min: 5 }),
+    check(
+      'Username',
+      'Username contains non alphanumeric characters - not allowed.'
+    ).isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail(),
+  ],
   passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
+    //check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashPassword = users.hashPassword(req.body.Password);
     users.findOneAndUpdate(
       { Username: req.params.Username },
       {
         $set: {
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         },
