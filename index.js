@@ -12,7 +12,12 @@ const model = require('./model.js');
 const movies = model.Movie;
 const users = model.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', (err) => {
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', (err) => {
+//   if (err) throw err;
+//   console.log('Connected to MongoDB!!!');
+// });
+
+mongoose.connect(process.env.CONNECTION_URI, (err) => {
   if (err) throw err;
   console.log('Connected to MongoDB!!!');
 });

@@ -99,3 +99,6 @@
 ::1 - - [23/Jul/2022:17:52:55 +0000] "POST /users/SunnyTest456/collections/62ca1db901b7ab6c754ebdde HTTP/1.1" 200 211 "-" "PostmanRuntime/7.29.0"
 ::1 - - [23/Jul/2022:17:53:33 +0000] "DELETE /users/SunnyTest456/collections/62ca1db901b7ab6c754ebdde HTTP/1.1" 200 185 "-" "PostmanRuntime/7.29.0"
 ::1 - - [23/Jul/2022:17:54:19 +0000] "DELETE /users/SunnyTest456 HTTP/1.1" 200 25 "-" "PostmanRuntime/7.29.0"
+127.0.0.1 - - [27/Jul/2022:03:00:13 +0000] "GET /movies HTTP/1.1" 401 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
+127.0.0.1 - - [27/Jul/2022:03:00:13 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://127.0.0.1:8080/movies" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
+127.0.0.1 - - [27/Jul/2022:03:00:18 +0000] "GET / HTTP/1.1" 200 18 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"
