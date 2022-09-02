@@ -143,11 +143,10 @@ app.put(
       return res.status(422).json({ errors: errors.array() });
     }
 
-    // let hashPassword =
-    //   req.body.Password.length < 50
-    //     ? users.hashPassword(req.body.Password)
-    //     : req.body.Password;
-    let hashPassword = users.hashPassword(req.body.Password);
+    let hashPassword =
+      req.body.Password.length < 50
+        ? users.hashPassword(req.body.Password)
+        : req.body.Password;
 
     users.findOneAndUpdate(
       { Username: req.params.Username },
