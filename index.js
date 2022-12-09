@@ -1,41 +1,44 @@
-const express = require('express'),
-  fs = require('fs'),
-  path = require('path'),
-  bodyParser = require('body-parser'),
-  uuid = require('uuid');
+const express = require('express'), //the framework of node.js, use to simplify the syntax of node javascript code.
+  fs = require('fs'), //filesystem
+  path = require('path'), //another built-in module
+  bodyParser = require('body-parser'), //The body-parser middleware module allows you to read the “body” of HTTP requests within your request handlers simply by using the code req.body.
+  uuid = require('uuid'); //generate a random id
 
-const morgan = require('morgan');
-const app = express();
-const mongoose = require('mongoose');
-const model = require('./model.js');
+const morgan = require('morgan'); // a middleware for logging the request url to the terminal.
+const app = express(); // an instance of express
+const mongoose = require('mongoose'); //mongoose is used to configure the model and schema of mongodb database. Give it a standard format.
+const model = require('./model.js'); //mongoose models store in a separate file, usually called model.js
 
-const movies = model.Movie;
-const users = model.User;
+const movies = model.Movie; //extract Movies from model.js
+const users = model.User; //extract Users from model.js
 
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', (err) => {
-//   if (err) throw err;
-//   console.log('Connected to MongoDB!!!');
-// });
-
-mongoose.connect(process.env.CONNECTION_URI, (err) => {
+mongoose.connect('mongodb://localhost:27017/myFlixDB', (err) => {
   if (err) throw err;
   console.log('Connected to MongoDB!!!');
 });
 
+// mongoose.connect(process.env.CONNECTION_URI, (err) => {
+//   if (err) throw err;
+//   console.log('Connected to MongoDB!!!');
+// }); //This allows Mongoose to connect to that database so it can perform CRUD operations on the documents it contains from within your REST API, also connect mongo db atlas database with the Heroku API
+
+// create a write stream (in append mode)
+// a ‘log.txt’ file is created in root directory
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a',
 });
 
+// setup the logger by combining morgan common format data with the log.txt created above.
 app.use(morgan('combined', { stream: accessLogStream }));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); //with this line of code, every time req.body will be in Json format, in other word it will translate all data in req.body to json format, so that can be push/add/update into the database through API.
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const cors = require('cors');
+const cors = require('cors'); //What CORS does is extend HTTP requests, decide which domain is allow or disallowed
 const { check, validationResult } = require('express-validator');
 
 app.use(cors());
 
-let auth = require('./auth')(app);
+let auth = require('./auth')(app); // this lind of code is to ensure the application can use auth.js and auth.js can also use Express.
 const passport = require('passport');
 require('./passport');
 
@@ -49,7 +52,7 @@ app.get(
   passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     movies
-      .find()
+      .find() //find() here is one of mongoose query functions.Instead of query from the actual database, it queries from the mongoose model.
       .then((movies) => {
         res.status(201).json(movies);
       })
@@ -66,7 +69,7 @@ app.get(
   passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     movies
-      .find({ Title: req.params.title })
+      .find({ Title: req.params.title }) //find() here is one of mongoose query functions.Instead of query from the actual database, it queries from the mongoose model.
       .then((movies) => {
         res.json(movies);
       })
@@ -83,7 +86,7 @@ app.get(
   passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     movies
-      .findOne({ 'Genre.Name': req.params.name })
+      .findOne({ 'Genre.Name': req.params.name }) //findOne() here is one of mongoose query functions.Instead of query from the actual database, it queries from the mongoose model.
       .then((movie) => {
         res.json(movie.Genre);
       })
@@ -100,7 +103,7 @@ app.get(
   passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     movies
-      .findOne({ 'Director.Name': req.params.directorname })
+      .findOne({ 'Director.Name': req.params.directorname }) //findOne() here is one of mongoose query functions.Instead of query from the actual database, it queries from the mongoose
       .then((movie) => {
         res.json(movie.Director);
       })
@@ -149,6 +152,7 @@ app.put(
         : req.body.Password;
 
     users.findOneAndUpdate(
+      //findOneAndUpdate() here is one of mongoose query functions.Instead of query from the actual database, it queries from the mongoose
       { Username: req.params.Username },
       {
         $set: {
@@ -177,7 +181,7 @@ app.get(
   passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     users
-      .find()
+      .find() //find() here is one of mongoose query functions.Instead of query from the actual database, it queries from the mongoose
       .then((users) => {
         res.status(201).json(users);
       })
@@ -223,16 +227,17 @@ app.post(
   //or use .isLength({min:5}) which means
   //mininum value of 5 characters are only allowed
   [
-    check('Username', 'Username is required').isLength({ min: 5 }),
-    check(
-      'Username',
-      'Username contains non alphanumeric characters - not allowed.'
-    ).isAlphanumeric(),
+    // check('Username', 'Username is required').isLength({ min: 5 }),
+    // check(
+    //   'Username',
+    //   'Username contains non alphanumeric characters - not allowed.'
+    // ).isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Email does not appear to be valid').isEmail(),
   ],
   (req, res) => {
     //check the validation object for errors
+    console.log(req.body);
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -341,7 +346,7 @@ app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', { root: __dirname });
 });
 
-app.use(express.static('public'));
+app.use(express.static('public')); //This function automatically routes all requests for static files to their corresponding files within a certain folder on the server (in this case, the “public” folder). With this function in place, if someone were to request, for instance, the “index.html” file, Express would automatically route that request to send back a response with the “public/index.html” file.
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

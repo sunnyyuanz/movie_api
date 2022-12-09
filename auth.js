@@ -27,8 +27,8 @@ module.exports = (router) => {
         if (error) {
           res.send(error);
         }
-        let token = generateJWTToken(user.toJSON());
-        return res.json({user,token})
+        let token = generateJWTToken(user.toJSON()); //if the username and password match with what's in the database, then generate a JWT based and then send back the user info with jwt token.
+        return res.json({ user, token });
       });
     })(req, res);
   });
