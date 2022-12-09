@@ -12,15 +12,15 @@ const model = require('./model.js'); //mongoose models store in a separate file,
 const movies = model.Movie; //extract Movies from model.js
 const users = model.User; //extract Users from model.js
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', (err) => {
-  if (err) throw err;
-  console.log('Connected to MongoDB!!!');
-});
-
-// mongoose.connect(process.env.CONNECTION_URI, (err) => {
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', (err) => {
 //   if (err) throw err;
 //   console.log('Connected to MongoDB!!!');
-// }); //This allows Mongoose to connect to that database so it can perform CRUD operations on the documents it contains from within your REST API, also connect mongo db atlas database with the Heroku API
+// });
+
+mongoose.connect(process.env.CONNECTION_URI, (err) => {
+  if (err) throw err;
+  console.log('Connected to MongoDB!!!');
+}); //This allows Mongoose to connect to that database so it can perform CRUD operations on the documents it contains from within your REST API, also connect mongo db atlas database with the Heroku API
 
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
@@ -227,13 +227,13 @@ app.post(
   //or use .isLength({min:5}) which means
   //mininum value of 5 characters are only allowed
   [
-    // check('Username', 'Username is required').isLength({ min: 5 }),
-    // check(
-    //   'Username',
-    //   'Username contains non alphanumeric characters - not allowed.'
-    // ).isAlphanumeric(),
+    check('Username', 'Username is required').isLength({ min: 5 }),
+    check(
+      'Username',
+      'Username contains non alphanumeric characters - not allowed.'
+    ).isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
-    check('Email', 'Email does not appear to be valid').isEmail(),
+    // check('Email', 'Email does not appear to be valid').isEmail(),
   ],
   (req, res) => {
     //check the validation object for errors
