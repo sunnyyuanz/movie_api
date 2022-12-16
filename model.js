@@ -23,6 +23,7 @@ let userSchema = mongoose.Schema({
   Email: { type: String, required: false },
   Birthday: Date,
   FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
+  Wishlist: [{ type: mongoose.Schema.Types.ObjectId }],
 });
 
 //hashing of submitted passwords
