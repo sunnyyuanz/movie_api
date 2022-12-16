@@ -298,13 +298,14 @@ app.delete(
 
 //Add a movie to a user's list of favorites
 app.post(
-  '/users/:username/collections/:MovieID',
+  '/users/:username/collections/:ID',
   passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     users.findOneAndUpdate(
       { Username: req.params.username },
       {
-        $push: { FavoriteMovies: req.params.MovieID },
+        $push: { FavoriteMovies: req.params.ID },
+        $push: { Wishlist: req.params.ID },
       },
       { new: true }, //This line makes sure that the updated document is returned
       (err, updatedUser) => {
@@ -321,13 +322,14 @@ app.post(
 
 //Remove a movie from user's list of favorites
 app.delete(
-  '/users/:username/collections/:MovieID',
+  '/users/:username/collections/:ID',
   passport.authenticate('jwt', { session: false }), //Authenticate on/off
   (req, res) => {
     users.findOneAndUpdate(
       { Username: req.params.username },
       {
-        $pull: { FavoriteMovies: req.params.MovieID },
+        $pull: { FavoriteMovies: req.params.ID },
+        $pull: { Wishlist: req.params.ID },
       },
       { new: true }, //This line makes sure that the updated document is returned
       (err, updatedUser) => {
