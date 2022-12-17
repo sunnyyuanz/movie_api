@@ -1,64 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-        <h1>Myflix API Introduction</h1>
-        <p>
-        Myflix API is a “movies” web application. The web
-application will provide users with access to information about different
-movies, directors, and genres. Users will be able to sign up, update their
-personal information, and create a list of their favorite movies.
+  </head>
+  <body>
+    <h1>Myflix API Introduction</h1>
+    <p>
+      Myflix API is a “movies” web application. The web application will provide
+      users with access to information about different movies, directors, and
+      genres. Users will be able to sign up, update their personal information,
+      and create a list of their favorite movies.
     </p>
     <table>
-        <thead>
-            <tr>
-                <th>Business Logic</th>
-                <th>URL</th>
-                <th>HTTP Method</th>
-                <th>Request body data format</th>
-                <th>Response body data format</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    Return a list of ALL movies to the user
-                </td>
-                <td>
-                    /movies
-                </td>
-                <td>
-                    GET
-                </td>
-                <td>
-                    None
-                </td>
-                <td>
-                    A JSON object holding data about all the movies
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
-                </td>
-                <td>
-                    /movies/[title]
-                </td>
-                <td>
-                    GET
-                </td>
-                <td>
-                    None
-                </td>
-                <td>
-                    A JSON object holding data about a single movie, containing an ID, title, description, genre, director and image url. Example:
-                    <pre>
+      <thead>
+        <tr>
+          <th>Business Logic</th>
+          <th>URL</th>
+          <th>HTTP Method</th>
+          <th>Request body data format</th>
+          <th>Response body data format</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Return a list of ALL movies to the user</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding data about all the movies</td>
+        </tr>
+        <tr>
+          <td>
+            Return data (description, genre, director, image URL, whether it’s
+            featured or not) about a single movie by title to the user
+          </td>
+          <td>/movies/[title]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>
+            A JSON object holding data about a single movie, containing an ID,
+            title, description, genre, director and image url. Example:
+            <pre>
                         <code>
                             { 
                                 "_id" : ObjectId("62d6efbe20613873b1d4edf3"), 
@@ -78,48 +64,38 @@ personal information, and create a list of their favorite movies.
                         }
                         </code>
                     </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Return data about a genre (description) by name/title (e.g., “Thriller”)
-                </td>
-                <td>
-                    /movies/genres/[name]
-                </td>
-                <td>
-                    GET
-                </td>
-                <td>
-                    None
-                </td>
-                <td>
-                    A JSON object holding data about the genre of a specific movie. Example:
-                    <pre>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Return data about a genre (description) by name/title (e.g.,
+            “Thriller”)
+          </td>
+          <td>/movies/genres/[name]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>
+            A JSON object holding data about the genre of a specific movie.
+            Example:
+            <pre>
                         <code>
                             <!-- {
                                 genre:"fantasy, Adventure, Children's film, Narrative"
                             } -->
                         </code>
                     </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Return data about a director (bio, birth year, death year) by name
-                </td>
-                <td>
-                    /movies/directors/[directorname]
-                </td>
-                <td>
-                    GET
-                </td>
-                <td>
-                    None
-                </td>
-                <td>
-                    A JSON object holding data about a director. Example:
-                    <pre>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Return data about a director (bio, birth year, death year) by name
+          </td>
+          <td>/movies/directors/[directorname]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>
+            A JSON object holding data about a director. Example:
+            <pre>
                         <code>
                             <!-- {
                                 director:"Chris Columbus",
@@ -131,24 +107,17 @@ personal information, and create a list of their favorite movies.
                             } -->
                         </code>
                     </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Allow users to add a movie to their list of favorites
-                </td>
-                <td>
-                    /users/[username]/collections/[MovieID]
-                </td>
-                <td>
-                    POST
-                </td>
-                <td>
-                    None
-                </td>
-                <td>
-                    A JSON object holding data about the movie that was added, including an ID:
-                    <pre>
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to add a movie to their list of favorites</td>
+          <td>/users/[username]/collections/[MovieID]</td>
+          <td>POST</td>
+          <td>None</td>
+          <td>
+            A JSON object holding data about the movie that was added, including
+            an ID:
+            <pre>
                         <code>
                             {
                                 "_id": "62d860fa0d42007c3d6e6191",
@@ -163,37 +132,53 @@ personal information, and create a list of their favorite movies.
                             }
                         </code>
                     </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Remove a movie from the collection by ID
-                </td>
-                <td>
-                    /users/[username]/collections/[MovieID]
-                </td>
-                <td>
-                    DELETE
-                </td>
-                <td>
-                    None
-                </td>
-                <td>
-                    A text message indicating whether the movie was successfuly removed
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Allow new users to register;
-                </td>
-                <td>
-                    /users
-                </td>
-                <td>
-                    POST
-                </td>
-                <td>A JSON object holding data about the users to add, structured like:
-                    <pre>
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to add an item to their wishlist</td>
+          <td>/users/[username]/wishlist/[ID]</td>
+          <td>POST</td>
+          <td>None</td>
+          <td>
+            A JSON object holding data about the movie that was added, including
+            an ID:
+            <pre>
+                        <code>
+                            {
+                                "_id": "62d860fa0d42007c3d6e6191",
+                                "Username": "Sunnytest",
+                                "Password": "Sunnytest",
+                                "Email": "Sunnytest@gmail.com",
+                                "FavoriteMovies": [
+                                    "62ca1db901b7ab6c754ebdde",
+                                    "62ca1db901b7ab6c754ebdde"
+                                ],
+                                "wishlist": [
+                                "62ca1db901b7ab6c754ebdde",
+                                "62ca1db901b7ab6c754ebdde"
+                            ],
+                                "__v": 0
+                            }
+                        </code>
+                    </pre>
+          </td>
+        </tr>
+        <tr>
+          <td>Remove a movie from the collection by ID</td>
+          <td>/users/[username]/collections/[MovieID]</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>
+            A text message indicating whether the movie was successfuly removed
+          </td>
+        </tr>
+        <tr>
+          <td>Allow new users to register;</td>
+          <td>/users</td>
+          <td>POST</td>
+          <td>
+            A JSON object holding data about the users to add, structured like:
+            <pre>
                          <code>
                             {
                                 "Username":"Sunnytest",
@@ -203,9 +188,10 @@ personal information, and create a list of their favorite movies.
                             }
                          </code>
                      </pre>
-                 </td>
-                 <td>A JSON object holding data about the users added, inluding an ID:
-                    <pre>
+          </td>
+          <td>
+            A JSON object holding data about the users added, inluding an ID:
+            <pre>
                         <code>
                             {
                                 "Username": "Sunnytest",
@@ -217,20 +203,15 @@ personal information, and create a list of their favorite movies.
                             }
                         </code>
                     </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Allow users to update their user info by username
-                </td>
-                <td>
-                    /users/[username]
-                </td>
-                <td>
-                    PUT
-                </td>
-                <td>A JSON object holding data with the info need to be updated:
-                    <pre>
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to update their user info by username</td>
+          <td>/users/[username]</td>
+          <td>PUT</td>
+          <td>
+            A JSON object holding data with the info need to be updated:
+            <pre>
                         <code>
                     {
                         "Username":"Sunnyzzyzz",
@@ -240,10 +221,10 @@ personal information, and create a list of their favorite movies.
                     }
                 </code>
                 </pre>
-                </td>
-                <td>
-                    A JSON object holding data with updated user info:
-                    <pre>
+          </td>
+          <td>
+            A JSON object holding data with updated user info:
+            <pre>
                         <code>
                             {
                                 "_id": "62ca40e501b7ab6c754ebde9",
@@ -257,16 +238,19 @@ personal information, and create a list of their favorite movies.
                             }
                         </code>
                     </pre>
-                </td>
-            </tr>
-            <tr>
-                <td>Allow exisiting users to deregister</td>
-                <td>/users/[username]</td>
-                <td>DELETE</td>
-                <td>none</td>
-                <td>A text message indicating whether the user was successfully deregisted</td>
-            </tr>
-        </tbody>
+          </td>
+        </tr>
+        <tr>
+          <td>Allow exisiting users to deregister</td>
+          <td>/users/[username]</td>
+          <td>DELETE</td>
+          <td>none</td>
+          <td>
+            A text message indicating whether the user was successfully
+            deregisted
+          </td>
+        </tr>
+      </tbody>
     </table>
-</body>
+  </body>
 </html>

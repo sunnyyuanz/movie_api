@@ -304,7 +304,29 @@ app.post(
     users.findOneAndUpdate(
       { Username: req.params.username },
       {
-        $push: { FavoriteMovies: req.params.ID, Wishlist: req.params.ID },
+        $push: { FavoriteMovies: req.params.ID },
+      },
+      { new: true }, //This line makes sure that the updated document is returned
+      (err, updatedUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error:' + err);
+        } else {
+          res.json(updatedUser);
+        }
+      }
+    );
+  }
+);
+//Add an item to a user's wishlist
+app.post(
+  '/users/:username/wishlist/:ID',
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
+  (req, res) => {
+    users.findOneAndUpdate(
+      { Username: req.params.username },
+      {
+        $push: { Wishlist: req.params.ID },
       },
       { new: true }, //This line makes sure that the updated document is returned
       (err, updatedUser) => {
@@ -319,6 +341,28 @@ app.post(
   }
 );
 
+//Remove an item from user's wishlist
+app.delete(
+  '/users/:username/wishlist/:ID',
+  passport.authenticate('jwt', { session: false }), //Authenticate on/off
+  (req, res) => {
+    users.findOneAndUpdate(
+      { Username: req.params.username },
+      {
+        $pull: { Wishlist: req.params.ID },
+      },
+      { new: true }, //This line makes sure that the updated document is returned
+      (err, updatedUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error:' + err);
+        } else {
+          res.json(updatedUser);
+        }
+      }
+    );
+  }
+);
 //Remove a movie from user's list of favorites
 app.delete(
   '/users/:username/collections/:ID',
